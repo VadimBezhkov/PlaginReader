@@ -8,12 +8,12 @@ using System.IO;
 
 namespace PlaginReader
 {
-    [Patch(@"D:\C#\Homeworks\Plagin Reader\ClassLibrary1.dll") ]
+    [Patch(@"D:\C#\Homeworks\Plagin Reader\PlaginReader\PlaginReader\Dll\ClassLibrary1.dll") ]
     class Program
     {
         static void Main(string[] args)
         {
-            string dirName = @"D:\C#\Homeworks\Plagin Reader";
+            string dirName = @"D:\C#\Homeworks\Plagin Reader\PlaginReader\PlaginReader\Dll";
             string[] files = Directory.GetFiles(dirName);
             foreach (var item in files)
             {
