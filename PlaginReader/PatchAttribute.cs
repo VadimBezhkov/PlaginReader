@@ -8,16 +8,14 @@ using System.Threading.Tasks;
 
 namespace PlaginReader
 {
-    class PatchAttribute:Attribute
+    //create my attribyte
+    class PathAttribute:Attribute
     {
-        public static string Patch { get; set; }
-        public PatchAttribute(string pa)
+        public string Path { get; set; }
+        public PathAttribute(string pa)
         {
-            Patch = pa;
+            Path = pa;
         }
-        public PatchAttribute()
-        {
 
-        }
     }
 }

@@ -8,39 +8,53 @@ using System.IO;
 
 namespace PlaginReader
 {
-    [Patch(@"D:\C#\Homeworks\Plagin Reader\PlaginReader\PlaginReader\Dll\ClassLibrary1.dll") ]
+    //value Atrribute
+    [Path(@"D:\C#\Homeworks\Plagin Reader\PlaginReader\PlaginReader\Dll")]
     class Program
     {
         static void Main(string[] args)
         {
-            string dirName = @"D:\C#\Homeworks\Plagin Reader\PlaginReader\PlaginReader\Dll";
-            string[] files = Directory.GetFiles(dirName);
-            foreach (var item in files)
+            //pulling out the attribute
+            Type name = typeof(Program);
+            object[] atrrs = name.GetCustomAttributes(false);
+
+            //getting attribute values
+            foreach (PathAttribute atrr in atrrs)
             {
-                Console.WriteLine(item);
+                //directory path
+                string dirName = atrr.Path;
+                string[] files = Directory.GetFiles(dirName);
 
-                Assembly asm = Assembly.LoadFile(item);
-                Console.WriteLine(asm.FullName);
-
-                Type type = asm.GetType("ClassLibrary1.Class1");
-
-                Type[] types = asm.GetTypes();
-
-                foreach (Type t in types)
+                //I get files from the directory
+                foreach (var item in files)
                 {
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine(t.Name);
-                    Console.ResetColor();
+                    Console.WriteLine(item);
+                    //I connect the library
+                    Assembly asm = Assembly.LoadFile(item);
+                    Console.WriteLine(asm.FullName);
+
+                    //I indicate my class
+                    Type type = asm.GetType("ClassLibrary1.Class1");
+
+                    Type[] types = asm.GetTypes();
+
+                    foreach (Type t in types)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine(t.Name);
+                        Console.ResetColor();
+                    }
+                    GC.Collect();
+                    object obj = Activator.CreateInstance(type);
+
+                    MethodInfo method = type.GetMethod("GetBiography");
+                    //calling method
+                    method.Invoke(obj, new object[] { });
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.ReadKey();
                 }
-                GC.Collect();
-                object obj = Activator.CreateInstance(type);
-
-                MethodInfo method = type.GetMethod("GetBiography");
-                method.Invoke(obj, new object[] { });
-
-                Console.ReadKey();
             }
         }
-
     }
 }
