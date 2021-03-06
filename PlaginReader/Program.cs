@@ -10,7 +10,7 @@ namespace PlaginReader
 {
     enum Serializable
     {
-        serializable,
+        serializable=1,
         deserializable,
         exit
     }
@@ -68,9 +68,9 @@ namespace PlaginReader
                 {
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.WriteLine("Hello Friend");
-                    Console.WriteLine("Press 0 to serializable");
-                    Console.WriteLine("Press 1 to deserializable");
-                    Console.WriteLine("Press 2 to exit this programm");
+                    Console.WriteLine("Press 1 to serializable");
+                    Console.WriteLine("Press 2 to deserializable");
+                    Console.WriteLine("Press 3 to exit this programm");
                     Console.ResetColor();
 
                     Serializable op;
