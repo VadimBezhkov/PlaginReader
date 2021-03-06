@@ -8,8 +8,14 @@ using System.IO;
 
 namespace PlaginReader
 {
+    enum Serializable
+    {
+        serializable,
+        deserializable,
+        exit
+    }
     //value Atrribute
-    [Path(@"D:\C#\Homeworks\Plagin Reader\PlaginReader\PlaginReader\Dll")]
+    [Path(@"D:\Repozitoriy\PlaginReader\PlaginReader\Dll")]
     class Program
     {
         static void Main(string[] args)
@@ -29,6 +35,7 @@ namespace PlaginReader
                 foreach (var item in files)
                 {
                     Console.WriteLine(item);
+
                     //I connect the library
                     Assembly asm = Assembly.LoadFile(item);
                     Console.WriteLine(asm.FullName);
@@ -44,15 +51,50 @@ namespace PlaginReader
                         Console.WriteLine(t.Name);
                         Console.ResetColor();
                     }
-                    GC.Collect();
                     object obj = Activator.CreateInstance(type);
 
                     MethodInfo method = type.GetMethod("GetBiography");
+
                     //calling method
                     method.Invoke(obj, new object[] { });
                     Console.WriteLine();
                     Console.WriteLine();
-                    Console.ReadKey();
+                }
+
+                Biography my = new Biography("Vadim", "Bezhkov", "Alexandrovich",
+                    new DateTime(1988, 12, 31), "Pinsk");
+
+                while (true)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("Hello Friend");
+                    Console.WriteLine("Press 0 to serializable");
+                    Console.WriteLine("Press 1 to deserializable");
+                    Console.WriteLine("Press 2 to exit this programm");
+                    Console.ResetColor();
+
+                    Serializable op;
+                    Enum.TryParse(Console.ReadLine(), out op);
+
+                    switch (op)
+                    {
+                        case Serializable.serializable:
+
+                            Console.Clear();
+                            my.CompressOrDecompress(my, ActionMode.Compress);
+                            Console.WriteLine();
+
+                            break;
+                        case Serializable.deserializable:
+                            Console.Clear();
+                            my.CompressOrDecompress(my, ActionMode.Decompress);
+                            Console.WriteLine();
+
+                            break;
+                        case Serializable.exit:
+                            Environment.Exit(0);
+                            break;
+                    }
                 }
             }
         }
